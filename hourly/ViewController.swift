@@ -1,10 +1,13 @@
 import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
-    @IBOutlet weak var myLabel: UILabel!
+    @IBOutlet weak var hourlyLabel: UILabel!
+    @IBOutlet weak var moneyLabel: UILabel!
     var inputTextField: UITextField!
     var isEditingMode = false
     var pricePerHour: Double = 10.00 // Move pricePerHour declaration here
+    var moneyMade: Double = 0.00
+    var timer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +22,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             inputTextField = nil
         }
         let formattedPrice = String(format: "€%.2f/hour", pricePerHour) // Define formattedPrice here
-        myLabel.text = formattedPrice
+        hourlyLabel.text = formattedPrice
+        
+        let workedMoney = String(format: "€%.2f", moneyMade) // Define formattedPrice here
+        moneyLabel.text = workedMoney
     }
     
     // Save pricePerHour to UserDefaults
@@ -36,7 +42,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func editButtonClicked(_ sender: UIButton) {
         if !isEditingMode {
-            let textField = UITextField(frame: myLabel.frame)
+            let textField = UITextField(frame: hourlyLabel.frame)
             textField.text = String(pricePerHour)
             textField.font = UIFont.systemFont(ofSize: 28)
             textField.textAlignment = .center
@@ -44,14 +50,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
             textField.keyboardType = .decimalPad
             view.addSubview(textField)
             inputTextField = textField
-            myLabel.isHidden = true
+            hourlyLabel.isHidden = true
             textField.becomeFirstResponder()
             
             // Change button title to "Done"
             sender.setTitle("Done", for: .normal)
             isEditingMode = true
         } else {
-            myLabel.isHidden = false
+            hourlyLabel.isHidden = false
             if let text = inputTextField?.text {
                 let cleanedText = text.replacingOccurrences(of: ",", with: ".")
                 pricePerHour = Double(cleanedText) ?? 0.00
@@ -79,7 +85,28 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Save pricePerHour locally
         savePricePerHourLocally()
         updateUI()
-        myLabel.isHidden = false
+        hourlyLabel.isHidden = false
         return true
+    }
+    
+    //start working
+    @IBAction func startWorkingButtonClicked(_ sender: UIButton) {
+        moneyMade = 0.0 // Reset money made when start working button is clicked
+        startTimer()
+    }
+
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateMoneyMade), userInfo: nil, repeats: true)
+    }
+
+    @objc func updateMoneyMade() {
+        moneyMade += pricePerHour / 3600.0 // Increment money made every second
+        print("Money made: \(moneyMade)")
+        // Update UI if needed
+        updateUI()
+    }
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 }

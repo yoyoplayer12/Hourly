@@ -32,21 +32,43 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0,00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3S-WS-dhd" userLabel="Price">
+                                <rect key="frame" x="56" y="491" width="281" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="Anm-Vb-shS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40U-pn-ttu">
+                                <rect key="frame" x="94" y="700" width="204" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Start working"/>
+                                <connections>
+                                    <action selector="startWorkingButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IpD-59-8zm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="E3S-WS-dhd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="56" id="6ki-aR-yKc"/>
                             <constraint firstItem="OXq-P4-mqV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="236" id="8DA-mI-skb"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="178" id="8hl-CB-Pqf"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="8iP-GY-TcE"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FgA-Je-ufb"/>
                             <constraint firstItem="OXq-P4-mqV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="140" id="XiJ-cM-0w1"/>
+                            <constraint firstAttribute="bottom" secondItem="E3S-WS-dhd" secondAttribute="bottom" constant="308" id="cN5-E5-0XE"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerX" secondItem="OXq-P4-mqV" secondAttribute="centerX" id="gxu-sV-3Mc"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-159" id="mOd-mm-5se"/>
+                            <constraint firstItem="E3S-WS-dhd" firstAttribute="centerX" secondItem="OXq-P4-mqV" secondAttribute="centerX" id="sNg-BJ-RgA"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="myLabel" destination="6Rd-aQ-HHn" id="FAT-cV-cMw"/>
+                        <outlet property="hourlyLabel" destination="6Rd-aQ-HHn" id="0dy-oh-Kb9"/>
+                        <outlet property="moneyLabel" destination="E3S-WS-dhd" id="baf-Mf-CwJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
