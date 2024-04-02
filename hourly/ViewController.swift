@@ -5,6 +5,7 @@ var pricePerHour: Double = 10.00
 class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var myLabel: UILabel!
     var inputTextField: UITextField!
+    var isEditingMode = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func editButtonClicked(_ sender: UIButton) {
-        if inputTextField == nil {
+        if !isEditingMode {
             let textField = UITextField(frame: myLabel.frame)
             textField.borderStyle = .roundedRect
             textField.text = String(pricePerHour)
@@ -32,17 +33,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
             view.addSubview(textField)
             inputTextField = textField
             myLabel.isHidden = true
-            
-            // Make the keyboard pop up automatically
             textField.becomeFirstResponder()
+            
+            // Change button title to "Done"
+            sender.setTitle("Done", for: .normal)
+            isEditingMode = true
         } else {
             myLabel.isHidden = false
-            if let text = inputTextField.text {
-                // Replace commas with dots before attempting to convert to Double
+            if let text = inputTextField?.text {
                 let cleanedText = text.replacingOccurrences(of: ",", with: ".")
                 pricePerHour = Double(cleanedText) ?? 0.00
             }
             updateUI()
+            inputTextField?.removeFromSuperview()
+            inputTextField = nil
+            
+            // Change button title back to "Edit"
+            sender.setTitle("Edit", for: .normal)
+            isEditingMode = false
         }
     }
 
