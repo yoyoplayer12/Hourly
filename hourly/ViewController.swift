@@ -3,7 +3,7 @@ import UIKit
 var pricePerHour: Double = 10.00
 
 class ViewController: UIViewController, UITextFieldDelegate {
-    @IBOutlet weak var myLabel: UILabel! // Connect this IBOutlet to your UILabel in the storyboard
+    @IBOutlet weak var myLabel: UILabel!
     var inputTextField: UITextField!
 
     override func viewDidLoad() {
@@ -17,7 +17,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             inputTextField.removeFromSuperview()
             inputTextField = nil
         }
-        let formattedPrice = String(format: "€%.2f/hour", pricePerHour) // Format the price with 2 decimal places and a euro sign
+        let formattedPrice = String(format: "€%.2f/hour", pricePerHour)
         myLabel.text = formattedPrice
     }
 
@@ -27,7 +27,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             textField.borderStyle = .roundedRect
             textField.text = String(pricePerHour)
             textField.textAlignment = .center
-            textField.delegate = self // Set the view controller as the delegate of the text field
+            textField.delegate = self
+            textField.keyboardType = .decimalPad
             view.addSubview(textField)
             inputTextField = textField
             myLabel.isHidden = true
@@ -36,7 +37,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
             textField.becomeFirstResponder()
         } else {
             myLabel.isHidden = false
-            pricePerHour = Double(inputTextField.text ?? "") ?? 0.00
+            if let text = inputTextField.text {
+                // Replace commas with dots before attempting to convert to Double
+                let cleanedText = text.replacingOccurrences(of: ",", with: ".")
+                pricePerHour = Double(cleanedText) ?? 0.00
+            }
             updateUI()
         }
     }
@@ -44,10 +49,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // MARK: - UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder() // Dismiss the keyboard
-        pricePerHour = Double(textField.text ?? "") ?? 0.00 // Save the entered value
-        updateUI() // Update the label
-        myLabel.isHidden = false // Show the label again
+        textField.resignFirstResponder()
+        if let text = textField.text {
+            let cleanedText = text.replacingOccurrences(of: ",", with: ".")
+            pricePerHour = Double(cleanedText) ?? 0.00
+        }
+        updateUI()
+        myLabel.isHidden = false
         return true
     }
 }
