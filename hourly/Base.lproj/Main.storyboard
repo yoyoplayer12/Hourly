@@ -41,9 +41,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40U-pn-ttu">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40U-pn-ttu">
                                 <rect key="frame" x="94" y="700" width="204" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="OA8-5q-ub1"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Start working">
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -62,16 +64,21 @@
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="178" id="8hl-CB-Pqf"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="8iP-GY-TcE"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FgA-Je-ufb"/>
+                            <constraint firstItem="40U-pn-ttu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="94" id="SuT-sY-BJk"/>
                             <constraint firstItem="OXq-P4-mqV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="140" id="XiJ-cM-0w1"/>
                             <constraint firstAttribute="bottom" secondItem="E3S-WS-dhd" secondAttribute="bottom" constant="308" id="cN5-E5-0XE"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerX" secondItem="OXq-P4-mqV" secondAttribute="centerX" id="gxu-sV-3Mc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="40U-pn-ttu" secondAttribute="bottom" constant="72" id="lVU-yn-TUY"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-159" id="mOd-mm-5se"/>
                             <constraint firstItem="E3S-WS-dhd" firstAttribute="centerX" secondItem="OXq-P4-mqV" secondAttribute="centerX" id="sNg-BJ-RgA"/>
+                            <constraint firstItem="40U-pn-ttu" firstAttribute="centerX" secondItem="E3S-WS-dhd" secondAttribute="centerX" id="tJ0-z3-wKg"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="editbutton" destination="OXq-P4-mqV" id="7m2-lI-HVl"/>
                         <outlet property="hourlyLabel" destination="6Rd-aQ-HHn" id="0dy-oh-Kb9"/>
                         <outlet property="moneyLabel" destination="E3S-WS-dhd" id="baf-Mf-CwJ"/>
+                        <outlet property="startworkingbutton" destination="40U-pn-ttu" id="5qa-zX-hvR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -8,6 +8,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var pricePerHour: Double = 10.00 // Move pricePerHour declaration here
     var moneyMade: Double = 0.00
     var timer: Timer?
+    @IBOutlet weak var editbutton: UIButton!
+    @IBOutlet weak var startworkingbutton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +93,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     //start working
     @IBAction func startWorkingButtonClicked(_ sender: UIButton) {
+        editbutton.isHidden = true
         moneyMade = 0.0 // Reset money made when start working button is clicked
         startTimer()
     }
