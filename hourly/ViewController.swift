@@ -5,14 +5,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var moneyLabel: UILabel!
     var inputTextField: UITextField!
     var isEditingMode = false
-    var pricePerHour: Double = 10.00 // Move pricePerHour declaration here
-    var moneyMade: Double = 0.00
+    var pricePerHour: Double = 10.000 // Move pricePerHour declaration here
+    var moneyMade: Double = 0.000
     var timer: Timer?
+    var startTime: Date?
+    @IBOutlet weak var editbutton: UIButton!
+    @IBOutlet weak var startworkingbutton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
-        loadPricePerHourFromLocal() // Load pricePerHour from UserDefaults
+        loadPricePerHourFromLocal()
+        loadMoneyMadeFromLocal()
+        startworkingbutton.tintColor = .systemBlue
+        
+        startworkingbutton.layer.cornerRadius = startworkingbutton.frame.width / 2
+        print(startworkingbutton.layer.cornerRadius)
+        print(startworkingbutton.frame.width)
+        print(startworkingbutton.frame.height)
+        startworkingbutton.layer.masksToBounds = true
+        
+        checkMoneyState()
         updateUI()
     }
 
@@ -21,10 +34,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             inputTextField.removeFromSuperview()
             inputTextField = nil
         }
-        let formattedPrice = String(format: "€%.2f/hour", pricePerHour) // Define formattedPrice here
+        let formattedPrice = String(format: "€%.3f/hour", pricePerHour) // Define formattedPrice here
         hourlyLabel.text = formattedPrice
         
-        let workedMoney = String(format: "€%.2f", moneyMade) // Define formattedPrice here
+        let workedMoney = String(format: "€%.3f", moneyMade) // Define formattedPrice here
         moneyLabel.text = workedMoney
     }
     
@@ -38,6 +51,21 @@ class ViewController: UIViewController, UITextFieldDelegate {
         if let savedPrice = UserDefaults.standard.value(forKey: "PricePerHour") as? Double {
             pricePerHour = savedPrice
         }
+    }
+    func saveMoneyMadeFromLocal(){
+        UserDefaults.standard.set(moneyMade, forKey: "MoneyMade")
+    }
+    func loadMoneyMadeFromLocal() {
+        if let savedMoney = UserDefaults.standard.value(forKey: "MoneyMade") as? Double {
+            moneyMade = savedMoney
+        }
+        else{
+            moneyMade = 0.000
+        }
+    }
+    func removeMoneyMadeFromLocal(){
+        UserDefaults.standard.removeObject(forKey: "MoneyMade")
+        UserDefaults.standard.synchronize() // Make sure changes are immediately saved
     }
     
     @IBAction func editButtonClicked(_ sender: UIButton) {
@@ -91,22 +119,46 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     //start working
     @IBAction func startWorkingButtonClicked(_ sender: UIButton) {
+        if startworkingbutton.title(for: .normal) == "Stop working" {
+            //stop money timer + empty
+            stopTimer()
+            editbutton.isHidden = false
+            startworkingbutton.setTitle("Start working", for: .normal)
+            startworkingbutton.tintColor = .systemBlue
+        } else {
+            startTimer()
+            editbutton.isHidden = true
+            startworkingbutton.setTitle("Stop working", for: .normal)
+            startworkingbutton.tintColor = .systemRed
+        }
         moneyMade = 0.0 // Reset money made when start working button is clicked
-        startTimer()
     }
 
     func startTimer() {
+        updateUI()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateMoneyMade), userInfo: nil, repeats: true)
     }
 
     @objc func updateMoneyMade() {
         moneyMade += pricePerHour / 3600.0 // Increment money made every second
-        print("Money made: \(moneyMade)")
+        saveMoneyMadeFromLocal()
+        //print("Money made: \(moneyMade)")
         // Update UI if needed
         updateUI()
     }
     func stopTimer() {
         timer?.invalidate()
         timer = nil
+        removeMoneyMadeFromLocal()
+        //add money to db?
+    }
+    func checkMoneyState(){
+        if let money = UserDefaults.standard.value(forKey: "MoneyMade") {
+            startTimer()
+            editbutton.isHidden = true
+            startworkingbutton.setTitle("Stop working", for: .normal)
+            startworkingbutton.tintColor = .systemRed
+        } else {
+        }
     }
 }

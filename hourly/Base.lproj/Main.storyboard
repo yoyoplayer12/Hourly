@@ -16,8 +16,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3S-WS-dhd" userLabel="Price">
+                                <rect key="frame" x="56" y="400" width="281" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="Anm-Vb-shS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OXq-P4-mqV">
-                                <rect key="frame" x="140" y="295" width="113" height="35"/>
+                                <rect key="frame" x="140" y="196" width="113" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Edit">
                                     <color key="baseForegroundColor" systemColor="linkColor"/>
@@ -26,28 +35,22 @@
                                     <action selector="editButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cc8-u5-rnH"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0,00" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Rd-aQ-HHn" userLabel="Price">
-                                <rect key="frame" x="102" y="241" width="189" height="60"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0,000" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Rd-aQ-HHn" userLabel="Price">
+                                <rect key="frame" x="102" y="146" width="189" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0,00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3S-WS-dhd" userLabel="Price">
-                                <rect key="frame" x="56" y="491" width="281" height="53"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40U-pn-ttu">
+                                <rect key="frame" x="121.66666666666669" y="603" width="150" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="53" id="Anm-Vb-shS"/>
+                                    <constraint firstAttribute="height" constant="150" id="wry-jc-6OZ"/>
+                                    <constraint firstAttribute="width" constant="150" id="xAV-nc-3vd"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40U-pn-ttu">
-                                <rect key="frame" x="94" y="700" width="204" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Start working">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="19"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <color key="baseBackgroundColor" systemColor="linkColor"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="startWorkingButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IpD-59-8zm"/>
@@ -58,20 +61,24 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="E3S-WS-dhd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="56" id="6ki-aR-yKc"/>
-                            <constraint firstItem="OXq-P4-mqV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="236" id="8DA-mI-skb"/>
-                            <constraint firstItem="6Rd-aQ-HHn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="178" id="8hl-CB-Pqf"/>
-                            <constraint firstItem="6Rd-aQ-HHn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="8iP-GY-TcE"/>
+                            <constraint firstItem="OXq-P4-mqV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="137" id="8DA-mI-skb"/>
+                            <constraint firstItem="6Rd-aQ-HHn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="87" id="8hl-CB-Pqf"/>
+                            <constraint firstItem="6Rd-aQ-HHn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="102" id="8iP-GY-TcE"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FgA-Je-ufb"/>
+                            <constraint firstItem="40U-pn-ttu" firstAttribute="centerX" secondItem="E3S-WS-dhd" secondAttribute="centerX" id="QcC-FY-Xgt"/>
                             <constraint firstItem="OXq-P4-mqV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="140" id="XiJ-cM-0w1"/>
-                            <constraint firstAttribute="bottom" secondItem="E3S-WS-dhd" secondAttribute="bottom" constant="308" id="cN5-E5-0XE"/>
+                            <constraint firstAttribute="bottom" secondItem="E3S-WS-dhd" secondAttribute="bottom" constant="399" id="cN5-E5-0XE"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerX" secondItem="OXq-P4-mqV" secondAttribute="centerX" id="gxu-sV-3Mc"/>
-                            <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-159" id="mOd-mm-5se"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="40U-pn-ttu" secondAttribute="bottom" constant="65" id="lSo-YL-wYy"/>
+                            <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-250" id="mOd-mm-5se"/>
                             <constraint firstItem="E3S-WS-dhd" firstAttribute="centerX" secondItem="OXq-P4-mqV" secondAttribute="centerX" id="sNg-BJ-RgA"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="editbutton" destination="OXq-P4-mqV" id="7m2-lI-HVl"/>
                         <outlet property="hourlyLabel" destination="6Rd-aQ-HHn" id="0dy-oh-Kb9"/>
                         <outlet property="moneyLabel" destination="E3S-WS-dhd" id="baf-Mf-CwJ"/>
+                        <outlet property="startworkingbutton" destination="40U-pn-ttu" id="5qa-zX-hvR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
