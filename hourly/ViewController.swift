@@ -18,10 +18,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         loadPricePerHourFromLocal()
         loadMoneyMadeFromLocal()
         startworkingbutton.tintColor = .systemBlue
-        startworkingbutton.frame = CGRect(x: 160, y: 100, width: 150, height: 150)
-        startworkingbutton.layer.cornerRadius = 0.5 * startworkingbutton.bounds.size.width
-        startworkingbutton.clipsToBounds = true
-        view.addSubview(startworkingbutton)
+        
+        startworkingbutton.layer.cornerRadius = startworkingbutton.frame.width / 2
+        print(startworkingbutton.layer.cornerRadius)
+        print(startworkingbutton.frame.width)
+        print(startworkingbutton.frame.height)
+        startworkingbutton.layer.masksToBounds = true
+        
         checkMoneyState()
         updateUI()
     }
@@ -139,7 +142,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func updateMoneyMade() {
         moneyMade += pricePerHour / 3600.0 // Increment money made every second
         saveMoneyMadeFromLocal()
-        print("Money made: \(moneyMade)")
+        //print("Money made: \(moneyMade)")
         // Update UI if needed
         updateUI()
     }
@@ -151,13 +154,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     func checkMoneyState(){
         if let money = UserDefaults.standard.value(forKey: "MoneyMade") {
-            print("yes, money exists: \(money)")
             startTimer()
             editbutton.isHidden = true
             startworkingbutton.setTitle("Stop working", for: .normal)
             startworkingbutton.tintColor = .systemRed
         } else {
-            print("no money")
         }
     }
 }
