@@ -60,6 +60,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             moneyMade = 0.000
         }
     }
+    func removeMoneyMadeFromLocal(){
+        UserDefaults.standard.removeObject(forKey: "MoneyMade")
+        UserDefaults.standard.synchronize() // Make sure changes are immediately saved
+    }
     
     @IBAction func editButtonClicked(_ sender: UIButton) {
         if !isEditingMode {
@@ -142,6 +146,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func stopTimer() {
         timer?.invalidate()
         timer = nil
+        removeMoneyMadeFromLocal()
         //add money to db?
     }
     func checkMoneyState(){
