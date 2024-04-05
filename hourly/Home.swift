@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class Home: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var hourlyLabel: UILabel!
     @IBOutlet weak var moneyLabel: UILabel!
     var inputTextField: UITextField!
@@ -9,20 +9,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var moneyMade: Double?
     var timer: Timer?
     var startTime: Date?
-    @IBOutlet weak var editbutton: UIButton!
-    @IBOutlet weak var startworkingbutton: UIButton!
-    @IBOutlet weak var stopworkingbutton: UIButton!
-
+    struct MoneyArchive: Codable {
+        var money: Double
+        var date: Date
+    }
+    @IBOutlet private weak var editbutton: UIButton!
+    @IBOutlet private weak var startworkingbutton: UIButton!
+    @IBOutlet private weak var stopworkingbutton: UIButton!
+    @IBOutlet private weak var archiveIcon: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         loadPricePerHourFromLocal()
         loadMoneyMadeFromLocal()
         startworkingbutton.tintColor = .systemBlue
-        
         startworkingbutton.layer.cornerRadius = startworkingbutton.frame.width / 2
         startworkingbutton.layer.masksToBounds = true
-        
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(archiveIconTapped))
+        archiveIcon.isUserInteractionEnabled = true
+        archiveIcon.addGestureRecognizer(tapGestureRecognizer)
         checkMoneyState()
         updateUI()
     }
@@ -32,10 +39,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             inputTextField.removeFromSuperview()
             inputTextField = nil
         }
-        let formattedPrice = String(format: "€%.3f/hour", pricePerHour) // Define formattedPrice here
+        let formattedPrice = String(format: "€%.4f/hour", pricePerHour) // Define formattedPrice here
         hourlyLabel.text = formattedPrice
         
-        let workedMoney = String(format: "€%.3f", moneyMade ?? 0.000) // Define formattedPrice here
+        let workedMoney = String(format: "€%.4f", moneyMade ?? 0.000) // Define formattedPrice here
         moneyLabel.text = workedMoney
     }
     
@@ -109,12 +116,43 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     @IBAction func stopWorkingButtonClicked(_ sender: UIButton) {
         //stop money timer + empty
+        //save money and date to an array in userdefaults
+        let currentDate = Date()
+        // Create a date formatter
+        
+        let moneyArchive = MoneyArchive(money: moneyMade ?? 0.0000, date: currentDate)
+                
+                // Load existing array from UserDefaults or create a new one if it doesn't exist
+                var moneyArchiveArray = UserDefaults.standard.array(forKey: "MoneyArchive") as? [Data] ?? []
+                
+                // Encode the MoneyArchive instance and append it to the array
+                let encoder = JSONEncoder()
+                if let encodedData = try? encoder.encode(moneyArchive) {
+                    moneyArchiveArray.append(encodedData)
+                    
+                    // Save the updated array back to UserDefaults
+                    UserDefaults.standard.set(moneyArchiveArray, forKey: "MoneyArchive")
+                }
+        
+        
+        
         stopTimer()
+        moneyMade = 0.0000
+        removeMoneyMadeFromLocal()
         editbutton.isHidden = false
         startworkingbutton.setTitle("Start Working", for: .normal)
         startworkingbutton.tintColor = .systemBlue
         stopworkingbutton.isHidden = true
+        updateUI()
+        //TODO: money saved popup
     }
+    @objc func archiveIconTapped() {
+        // Add your desired action here
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let archiveController = storyboard.instantiateViewController(withIdentifier: "archive_controller")
+        self.present(archiveController, animated: true)
+    }
+    
     
     //functions
     // Save pricePerHour to UserDefaults
@@ -136,11 +174,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
             moneyMade = savedMoney
         }
         else{
-            moneyMade = 0.000
+            moneyMade = 0.0000
         }
     }
     func removeMoneyMadeFromLocal(){
         UserDefaults.standard.removeObject(forKey: "MoneyMade")
+        moneyMade = 0.0000
         UserDefaults.standard.synchronize() // Make sure changes are immediately saved
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -157,20 +196,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     func startTimer() {
         updateUI()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateMoneyMade), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateMoneyMade), userInfo: nil, repeats: true)
     }
     func stopTimer() {
         timer?.invalidate()
         timer = nil
         removeMoneyMadeFromLocal()
-        //add money to db?
     }
     func pauseTimer(){
         timer?.invalidate()
         timer = nil
     }
     @objc func updateMoneyMade() {
-        moneyMade! += pricePerHour / 3600.0 // Increment money made every second
+        moneyMade! += pricePerHour / 36000.0 // Increment money made every second
         saveMoneyMadeFromLocal()
         //print("Money made: \(moneyMade)")
         // Update UI if needed
