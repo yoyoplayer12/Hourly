@@ -159,7 +159,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     func startTimer() {
         updateUI()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateMoneyMade), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateMoneyMade), userInfo: nil, repeats: true)
     }
     func stopTimer() {
         timer?.invalidate()
@@ -173,7 +173,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         timer = nil
     }
     @objc func updateMoneyMade() {
-        moneyMade! += pricePerHour / 3600.0 // Increment money made every second
+        moneyMade! += pricePerHour / 36000.0 // Increment money made every second
         saveMoneyMadeFromLocal()
         //print("Money made: \(moneyMade)")
         // Update UI if needed
