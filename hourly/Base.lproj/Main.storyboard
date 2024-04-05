@@ -66,28 +66,37 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="briefcase.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sdo-ph-xSp">
+                                <rect key="frame" x="302" y="60.666666666666629" width="50" height="50"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Rd-aQ-HHn" firstAttribute="top" secondItem="sdo-ph-xSp" secondAttribute="bottom" constant="34.666666666666657" id="3Ob-GK-Lr4"/>
                             <constraint firstItem="E3S-WS-dhd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="41" id="6ki-aR-yKc"/>
                             <constraint firstItem="OXq-P4-mqV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="137" id="8DA-mI-skb"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="86" id="8hl-CB-Pqf"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="41" id="8iP-GY-TcE"/>
+                            <constraint firstItem="sdo-ph-xSp" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="BuL-gi-Xqz"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="1" id="FgA-Je-ufb"/>
                             <constraint firstItem="FV7-aD-E58" firstAttribute="centerX" secondItem="40U-pn-ttu" secondAttribute="centerX" id="Hb8-1d-9Nh"/>
                             <constraint firstItem="FV7-aD-E58" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="113" id="QYJ-lT-FET"/>
                             <constraint firstItem="40U-pn-ttu" firstAttribute="centerX" secondItem="E3S-WS-dhd" secondAttribute="centerX" id="QcC-FY-Xgt"/>
                             <constraint firstItem="OXq-P4-mqV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="140" id="XiJ-cM-0w1"/>
                             <constraint firstItem="FV7-aD-E58" firstAttribute="top" secondItem="40U-pn-ttu" secondAttribute="bottom" constant="8" id="aVw-xh-lZJ"/>
+                            <constraint firstItem="sdo-ph-xSp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="327" id="cG1-LG-9KW"/>
                             <constraint firstAttribute="bottom" secondItem="E3S-WS-dhd" secondAttribute="bottom" constant="399" id="cN5-E5-0XE"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerX" secondItem="OXq-P4-mqV" secondAttribute="centerX" constant="1" id="gxu-sV-3Mc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="40U-pn-ttu" secondAttribute="bottom" constant="138" id="lSo-YL-wYy"/>
                             <constraint firstItem="6Rd-aQ-HHn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-251" id="mOd-mm-5se"/>
                             <constraint firstItem="E3S-WS-dhd" firstAttribute="centerX" secondItem="OXq-P4-mqV" secondAttribute="centerX" id="sNg-BJ-RgA"/>
+                            <constraint firstItem="sdo-ph-xSp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="-1.6666666666666643" id="zgh-sI-yZ2"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="archiveIcon" destination="sdo-ph-xSp" id="G79-wx-5oC"/>
                         <outlet property="editbutton" destination="OXq-P4-mqV" id="cRf-iB-kBa"/>
                         <outlet property="hourlyLabel" destination="6Rd-aQ-HHn" id="0dy-oh-Kb9"/>
                         <outlet property="moneyLabel" destination="E3S-WS-dhd" id="baf-Mf-CwJ"/>
@@ -99,8 +108,24 @@
             </objects>
             <point key="canvasLocation" x="70.992366412213741" y="-2.1126760563380285"/>
         </scene>
+        <!--Archive-->
+        <scene sceneID="ILd-0V-ibV">
+            <objects>
+                <viewController storyboardIdentifier="archive_controller" id="ZFp-BH-4PK" customClass="Archive" customModule="hourly" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SX1-Lh-Yjl">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Gk0-s4-Z7t"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K0O-x1-Jaq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="821" y="-2"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="briefcase.fill" catalog="system" width="128" height="100"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

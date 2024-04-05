@@ -9,20 +9,27 @@ class Home: UIViewController, UITextFieldDelegate {
     var moneyMade: Double?
     var timer: Timer?
     var startTime: Date?
-    @IBOutlet weak var editbutton: UIButton!
-    @IBOutlet weak var startworkingbutton: UIButton!
-    @IBOutlet weak var stopworkingbutton: UIButton!
-
+    struct MoneyArchive: Codable {
+        var money: Double
+        var date: Date
+    }
+    @IBOutlet private weak var editbutton: UIButton!
+    @IBOutlet private weak var startworkingbutton: UIButton!
+    @IBOutlet private weak var stopworkingbutton: UIButton!
+    @IBOutlet private weak var archiveIcon: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         loadPricePerHourFromLocal()
         loadMoneyMadeFromLocal()
         startworkingbutton.tintColor = .systemBlue
-        
         startworkingbutton.layer.cornerRadius = startworkingbutton.frame.width / 2
         startworkingbutton.layer.masksToBounds = true
-        
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(archiveIconTapped))
+        archiveIcon.isUserInteractionEnabled = true
+        archiveIcon.addGestureRecognizer(tapGestureRecognizer)
         checkMoneyState()
         updateUI()
     }
@@ -109,6 +116,26 @@ class Home: UIViewController, UITextFieldDelegate {
     }
     @IBAction func stopWorkingButtonClicked(_ sender: UIButton) {
         //stop money timer + empty
+        //save money and date to an array in userdefaults
+        let currentDate = Date()
+        // Create a date formatter
+        
+        let moneyArchive = MoneyArchive(money: moneyMade ?? 0.0000, date: currentDate)
+                
+                // Load existing array from UserDefaults or create a new one if it doesn't exist
+                var moneyArchiveArray = UserDefaults.standard.array(forKey: "MoneyArchive") as? [Data] ?? []
+                
+                // Encode the MoneyArchive instance and append it to the array
+                let encoder = JSONEncoder()
+                if let encodedData = try? encoder.encode(moneyArchive) {
+                    moneyArchiveArray.append(encodedData)
+                    
+                    // Save the updated array back to UserDefaults
+                    UserDefaults.standard.set(moneyArchiveArray, forKey: "MoneyArchive")
+                }
+        
+        
+        
         stopTimer()
         moneyMade = 0.0000
         removeMoneyMadeFromLocal()
@@ -119,6 +146,14 @@ class Home: UIViewController, UITextFieldDelegate {
         updateUI()
         //TODO: money saved popup
     }
+    @objc func archiveIconTapped() {
+        print("Image View Tapped")
+        // Add your desired action here
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let archiveController = storyboard.instantiateViewController(withIdentifier: "archive_controller")
+        self.present(archiveController, animated: true)
+    }
+    
     
     //functions
     // Save pricePerHour to UserDefaults
@@ -168,7 +203,6 @@ class Home: UIViewController, UITextFieldDelegate {
         timer?.invalidate()
         timer = nil
         removeMoneyMadeFromLocal()
-        //TODO: add money to db?
     }
     func pauseTimer(){
         timer?.invalidate()
