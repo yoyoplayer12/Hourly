@@ -147,7 +147,6 @@ class Home: UIViewController, UITextFieldDelegate {
         //TODO: money saved popup
     }
     @objc func archiveIconTapped() {
-        print("Image View Tapped")
         // Add your desired action here
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let archiveController = storyboard.instantiateViewController(withIdentifier: "archive_controller")
