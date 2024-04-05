@@ -116,6 +116,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         startworkingbutton.setTitle("Start Working", for: .normal)
         startworkingbutton.tintColor = .systemBlue
         stopworkingbutton.isHidden = true
+        updateUI()
         //TODO: money saved popup
     }
     
@@ -167,7 +168,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         timer?.invalidate()
         timer = nil
         removeMoneyMadeFromLocal()
-        
         //TODO: add money to db?
     }
     func pauseTimer(){
