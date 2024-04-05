@@ -119,6 +119,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     //start working
     @IBAction func startWorkingButtonClicked(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        generator.impactOccurred()
         if startworkingbutton.title(for: .normal) == "Stop working" {
             //stop money timer + empty
             stopTimer()
@@ -153,7 +156,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //add money to db?
     }
     func checkMoneyState(){
-        if let money = UserDefaults.standard.value(forKey: "MoneyMade") {
+        if (UserDefaults.standard.value(forKey: "MoneyMade") != nil) {
             startTimer()
             editbutton.isHidden = true
             startworkingbutton.setTitle("Stop working", for: .normal)
