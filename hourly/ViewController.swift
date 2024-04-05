@@ -6,11 +6,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var inputTextField: UITextField!
     var isEditingMode = false
     var pricePerHour: Double = 10.000 // Move pricePerHour declaration here
-    var moneyMade: Double = 0.000
+    var moneyMade: Double?
     var timer: Timer?
     var startTime: Date?
     @IBOutlet weak var editbutton: UIButton!
     @IBOutlet weak var startworkingbutton: UIButton!
+    @IBOutlet weak var stopworkingbutton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +21,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         startworkingbutton.tintColor = .systemBlue
         
         startworkingbutton.layer.cornerRadius = startworkingbutton.frame.width / 2
-        print(startworkingbutton.layer.cornerRadius)
-        print(startworkingbutton.frame.width)
-        print(startworkingbutton.frame.height)
         startworkingbutton.layer.masksToBounds = true
         
         checkMoneyState()
@@ -37,37 +35,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let formattedPrice = String(format: "€%.3f/hour", pricePerHour) // Define formattedPrice here
         hourlyLabel.text = formattedPrice
         
-        let workedMoney = String(format: "€%.3f", moneyMade) // Define formattedPrice here
+        let workedMoney = String(format: "€%.3f", moneyMade ?? 0.000) // Define formattedPrice here
         moneyLabel.text = workedMoney
     }
     
-    // Save pricePerHour to UserDefaults
-    func savePricePerHourLocally() {
-        UserDefaults.standard.set(pricePerHour, forKey: "PricePerHour")
-    }
+
     
-    // Load pricePerHour from UserDefaults
-    func loadPricePerHourFromLocal() {
-        if let savedPrice = UserDefaults.standard.value(forKey: "PricePerHour") as? Double {
-            pricePerHour = savedPrice
-        }
-    }
-    func saveMoneyMadeFromLocal(){
-        UserDefaults.standard.set(moneyMade, forKey: "MoneyMade")
-    }
-    func loadMoneyMadeFromLocal() {
-        if let savedMoney = UserDefaults.standard.value(forKey: "MoneyMade") as? Double {
-            moneyMade = savedMoney
-        }
-        else{
-            moneyMade = 0.000
-        }
-    }
-    func removeMoneyMadeFromLocal(){
-        UserDefaults.standard.removeObject(forKey: "MoneyMade")
-        UserDefaults.standard.synchronize() // Make sure changes are immediately saved
-    }
-    
+    //buttons
+    //start working
     @IBAction func editButtonClicked(_ sender: UIButton) {
         if !isEditingMode {
             let textField = UITextField(frame: hourlyLabel.frame)
@@ -101,9 +76,73 @@ class ViewController: UIViewController, UITextFieldDelegate {
             isEditingMode = false
         }
     }
-
-    // MARK: - UITextFieldDelegate
+    @IBAction func startWorkingButtonClicked(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        generator.impactOccurred()
+        if startworkingbutton.title(for: .normal) == "Pause" {
+            //pause timer
+            //restart the timer below
+            pauseTimer()
+            saveMoneyMadeFromLocal()
+            stopworkingbutton.isHidden = false
+            startworkingbutton.setTitle("Resume", for: .normal)
+            startworkingbutton.tintColor = .systemOrange
+        }
+        else if startworkingbutton.title(for: .normal) == "Resume" {
+            //continue timer
+            //pause the timer below
+            startTimer()
+            loadMoneyMadeFromLocal()
+            stopworkingbutton.isHidden = false
+            startworkingbutton.setTitle("Pause", for: .normal)
+            startworkingbutton.tintColor = .systemOrange
+        }
+        else {
+            //start timer
+            startTimer()
+            stopworkingbutton.isHidden = false
+            editbutton.isHidden = true
+            startworkingbutton.setTitle("Pause", for: .normal)
+            startworkingbutton.tintColor = .systemOrange
+        }
+    }
+    @IBAction func stopWorkingButtonClicked(_ sender: UIButton) {
+        //stop money timer + empty
+        stopTimer()
+        editbutton.isHidden = false
+        startworkingbutton.setTitle("Start Working", for: .normal)
+        startworkingbutton.tintColor = .systemBlue
+        stopworkingbutton.isHidden = true
+    }
     
+    //functions
+    // Save pricePerHour to UserDefaults
+    func savePricePerHourLocally() {
+        UserDefaults.standard.set(pricePerHour, forKey: "PricePerHour")
+    }
+    
+    // Load pricePerHour from UserDefaults
+    func loadPricePerHourFromLocal() {
+        if let savedPrice = UserDefaults.standard.value(forKey: "PricePerHour") as? Double {
+            pricePerHour = savedPrice
+        }
+    }
+    func saveMoneyMadeFromLocal(){
+        UserDefaults.standard.set(moneyMade, forKey: "MoneyMade")
+    }
+    func loadMoneyMadeFromLocal() {
+        if let savedMoney = UserDefaults.standard.value(forKey: "MoneyMade") as? Double {
+            moneyMade = savedMoney
+        }
+        else{
+            moneyMade = 0.000
+        }
+    }
+    func removeMoneyMadeFromLocal(){
+        UserDefaults.standard.removeObject(forKey: "MoneyMade")
+        UserDefaults.standard.synchronize() // Make sure changes are immediately saved
+    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let text = textField.text {
@@ -116,35 +155,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         hourlyLabel.isHidden = false
         return true
     }
-    
-    //start working
-    @IBAction func startWorkingButtonClicked(_ sender: UIButton) {
-        if startworkingbutton.title(for: .normal) == "Stop working" {
-            //stop money timer + empty
-            stopTimer()
-            editbutton.isHidden = false
-            startworkingbutton.setTitle("Start working", for: .normal)
-            startworkingbutton.tintColor = .systemBlue
-        } else {
-            startTimer()
-            editbutton.isHidden = true
-            startworkingbutton.setTitle("Stop working", for: .normal)
-            startworkingbutton.tintColor = .systemRed
-        }
-        moneyMade = 0.0 // Reset money made when start working button is clicked
-    }
-
     func startTimer() {
         updateUI()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateMoneyMade), userInfo: nil, repeats: true)
-    }
-
-    @objc func updateMoneyMade() {
-        moneyMade += pricePerHour / 3600.0 // Increment money made every second
-        saveMoneyMadeFromLocal()
-        //print("Money made: \(moneyMade)")
-        // Update UI if needed
-        updateUI()
     }
     func stopTimer() {
         timer?.invalidate()
@@ -152,13 +165,26 @@ class ViewController: UIViewController, UITextFieldDelegate {
         removeMoneyMadeFromLocal()
         //add money to db?
     }
+    func pauseTimer(){
+        timer?.invalidate()
+        timer = nil
+    }
+    @objc func updateMoneyMade() {
+        moneyMade! += pricePerHour / 3600.0 // Increment money made every second
+        saveMoneyMadeFromLocal()
+        //print("Money made: \(moneyMade)")
+        // Update UI if needed
+        updateUI()
+    }
     func checkMoneyState(){
-        if let money = UserDefaults.standard.value(forKey: "MoneyMade") {
+        if (UserDefaults.standard.value(forKey: "MoneyMade") != nil) {
             startTimer()
             editbutton.isHidden = true
-            startworkingbutton.setTitle("Stop working", for: .normal)
-            startworkingbutton.tintColor = .systemRed
+            stopworkingbutton.isHidden = false
+            startworkingbutton.setTitle("Pause", for: .normal)
+            startworkingbutton.tintColor = .systemOrange
         } else {
+            stopworkingbutton.isHidden = true
         }
     }
 }

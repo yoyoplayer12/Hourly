@@ -16,9 +16,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Hourly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tc-dH-2nD">
-                                <rect key="frame" x="118" y="390" width="157" height="73"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hourly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tc-dH-2nD">
+                                <rect key="frame" x="82" y="383" width="229" height="86"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -27,9 +27,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="4tc-dH-2nD" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="F8f-rb-e22"/>
-                            <constraint firstItem="4tc-dH-2nD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="331" id="P9A-fH-uVg"/>
+                            <constraint firstItem="4tc-dH-2nD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="324" id="P9A-fH-uVg"/>
                             <constraint firstItem="4tc-dH-2nD" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Uqi-pO-F7m"/>
-                            <constraint firstItem="4tc-dH-2nD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="118" id="nI1-N9-CVZ"/>
+                            <constraint firstItem="4tc-dH-2nD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="82" id="nI1-N9-CVZ"/>
                         </constraints>
                     </view>
                 </viewController>
