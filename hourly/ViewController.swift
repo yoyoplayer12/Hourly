@@ -32,10 +32,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             inputTextField.removeFromSuperview()
             inputTextField = nil
         }
-        let formattedPrice = String(format: "€%.3f/hour", pricePerHour) // Define formattedPrice here
+        let formattedPrice = String(format: "€%.4f/hour", pricePerHour) // Define formattedPrice here
         hourlyLabel.text = formattedPrice
         
-        let workedMoney = String(format: "€%.3f", moneyMade ?? 0.000) // Define formattedPrice here
+        let workedMoney = String(format: "€%.4f", moneyMade ?? 0.000) // Define formattedPrice here
         moneyLabel.text = workedMoney
     }
     
@@ -110,6 +110,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func stopWorkingButtonClicked(_ sender: UIButton) {
         //stop money timer + empty
         stopTimer()
+        removeMoneyMadeFromLocal()
         editbutton.isHidden = false
         startworkingbutton.setTitle("Start Working", for: .normal)
         startworkingbutton.tintColor = .systemBlue
@@ -136,11 +137,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
             moneyMade = savedMoney
         }
         else{
-            moneyMade = 0.000
+            moneyMade = 0.0000
         }
     }
     func removeMoneyMadeFromLocal(){
         UserDefaults.standard.removeObject(forKey: "MoneyMade")
+        moneyMade = 0.0000
         UserDefaults.standard.synchronize() // Make sure changes are immediately saved
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -163,6 +165,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         timer?.invalidate()
         timer = nil
         removeMoneyMadeFromLocal()
+        
         //add money to db?
     }
     func pauseTimer(){
