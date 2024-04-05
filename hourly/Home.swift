@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class Home: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var hourlyLabel: UILabel!
     @IBOutlet weak var moneyLabel: UILabel!
     var inputTextField: UITextField!
