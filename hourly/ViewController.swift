@@ -110,11 +110,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func stopWorkingButtonClicked(_ sender: UIButton) {
         //stop money timer + empty
         stopTimer()
+        moneyMade = 0.0000
         removeMoneyMadeFromLocal()
         editbutton.isHidden = false
         startworkingbutton.setTitle("Start Working", for: .normal)
         startworkingbutton.tintColor = .systemBlue
         stopworkingbutton.isHidden = true
+        //TODO: money saved popup
     }
     
     //functions
@@ -166,7 +168,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         timer = nil
         removeMoneyMadeFromLocal()
         
-        //add money to db?
+        //TODO: add money to db?
     }
     func pauseTimer(){
         timer?.invalidate()
